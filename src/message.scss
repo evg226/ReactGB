@@ -1,0 +1,17 @@
+.message{
+    color: #505050;
+    & span {
+        padding: 0.5rem;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.5s ease;
+        &:hover{
+            border-radius: 10px;
+            box-shadow: 0 0 10px #505050;
+        }
+    }
+}
+
+.reded{
+    color:#fa5e5e;
+}
