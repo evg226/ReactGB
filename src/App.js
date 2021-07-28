@@ -1,5 +1,5 @@
 // import logo from './logo.svg';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import './App.scss';
 import MessageInputForm from "./MessageInputForm"
 import Message from "./Message"
@@ -10,14 +10,16 @@ function App() {
     const [messageList, setMessageList] = useState([]);
     const [isInput, setIsInput] = useState(true);
 
-    const addNewMessage = (newMessage) => {
+    const addNewMessage = useCallback((newMessage) => {
         setIsInput(() => false);
         setMessageList(prevMessageList => [...prevMessageList, newMessage]);
-    }
+    }, []);
+    
 
-    const robotSay = (robotText,key) => {
-        addNewMessage({ id: key+new Date(), author: "Robot", text: robotText });
-    }
+    const robotSay = useCallback((robotText, key) => {
+        addNewMessage({ id: key + new Date(), author: "Robot", text: robotText });
+    }, []);
+    
 
     let robotProcessedTimeout;
 
@@ -37,8 +39,8 @@ function App() {
 
     return (
         <div className = "container">
-        <div className = "messenger">
-            <div className = "messenger__container">
+            <div className = "messenger">
+                <div className = "messenger__container">
                     <h1 className="messenger__header" > Мессенджер </h1>
                     <MessageInputForm classList = "messenger__input"
                         author={currentAuthor} isInput={isInput} addMessage={addNewMessage} />
