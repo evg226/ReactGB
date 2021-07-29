@@ -1,0 +1,15 @@
+form{
+    display: flex;
+    margin:1rem 0;
+}
+
+.box{
+    flex:1;
+    margin-right: 0.5rem;
+}
+
+.MuiTextField-root{
+    width: 100%;
+}
+
+

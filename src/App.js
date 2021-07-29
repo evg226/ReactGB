@@ -1,55 +1,68 @@
-// import logo from './logo.svg';
-import { useCallback, useEffect, useState } from 'react';
 import './App.scss';
+import { useCallback, useEffect, useState } from 'react';
+import { Paper, List, Typography } from '@material-ui/core/'
+
 import MessageInputForm from "./MessageInputForm"
 import Message from "./Message"
+import Chat from "./Chat"
 
 const currentAuthor = "Evgeny";
+const chats = [
+    { id: 1, caption: "Общий" },
+    { id: 2, caption: "Приват" },
+];
 
 function App() {
     const [messageList, setMessageList] = useState([]);
+    const [chatList, setChatList] = useState(chats);
+    const [activeChat, setActiveChat] = useState(chats[0]);
     const [isInput, setIsInput] = useState(true);
-
+    
     const addNewMessage = useCallback((newMessage) => {
         setIsInput(() => false);
         setMessageList(prevMessageList => [...prevMessageList, newMessage]);
     }, []);
-    
-
-    const robotSay = useCallback((robotText, key) => {
-        addNewMessage({ id: key + new Date(), author: "Robot", text: robotText });
-    }, []);
-    
-
-    let robotProcessedTimeout;
 
     useEffect(() => {
+        let robotProcessedTimeout;    
         if (messageList.length > 0 && messageList[messageList.length - 1].author === currentAuthor) {
-            robotSay(`${currentAuthor}, от Вас получено сообщение "${messageList[messageList.length - 1].text}"`,"accept");
+            addNewMessage({ id: new Date(), author: "Robot", text: "Ваше сообщение: отправлено" });
             robotProcessedTimeout = setTimeout(() => {
-                robotSay(`${currentAuthor}, обработано Ваше сообщение "${messageList[messageList.length - 1].text}"`,"process");
+                setMessageList(prevMessageList => {
+                    prevMessageList[prevMessageList.length - 1].text += " и доставлено";
+                    return prevMessageList;
+                });
                 setIsInput(() => true);
             }, 1500);
         }
+        return () => clearTimeout(robotProcessedTimeout);
     }, [messageList]);
 
-    useEffect(() => {
-        return () => robotProcessedTimeout && clearTimeout(robotProcessedTimeout);
+     const selectChat = useCallback((chat) => {
+        setIsInput(() => true);        
+        setActiveChat(() => chat);
+        setMessageList(() => []);
     }, []);
 
     return (
-        <div className = "container">
-            <div className = "messenger">
-                <div className = "messenger__container">
-                    <h1 className="messenger__header" > Мессенджер </h1>
-                    <MessageInputForm classList = "messenger__input"
-                        author={currentAuthor} isInput={isInput} addMessage={addNewMessage} />
-                    <div className="messenger__items">
-                        <h2 className="messenger__items-header"> Сообщения </h2>
-                        {messageList.map(message => < Message key={message.id} mes={message} />)}
-                    </div>
+        <div className="container">
+            <Paper variant="outlined" className="messenger">
+                <Typography variant="h4" gutterBottom>Мессенджер</Typography>
+                <div className="messenger__box">
+                    <Paper variant="outlined" className="messenger__chats">
+                        <Typography variant="h5" gutterBottom>Чаты</Typography>
+                        <List>{chatList.map(chat => <Chat key={chat.id} chat={chat} selectChat={selectChat} />)}</List>
+                    </Paper>
+                    <Paper variant="outlined" className="messenger__messages">
+                        <Typography variant="h5" gutterBottom>Активный чат: {activeChat.caption}</Typography>
+                            <MessageInputForm classList = "messenger__input"
+                                author={currentAuthor} isInput={isInput} addMessage={addNewMessage} />
+                            <Paper>
+                                <List>{messageList.map(message => < Message key={message.id} mes={message}/>)}</List>
+                            </Paper>
+                    </Paper>
                 </div>
-            </div>
+            </Paper>
         </div>
     );
 }

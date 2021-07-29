@@ -1,18 +1,10 @@
-.message{
-    color: #505050;
-    margin: 0.2rem 0 ;
-    display: flex;
-    & span {
-      
-        cursor: pointer;
-        transition: all 0.5s ease;
-       
-    }
-    &__author{
-        color:#fa5e5e;
-    }
-    &__text{
-        margin-left:0.5rem;
-    }
-    
+.MuiTypography-root{
+    word-wrap: break-word;
+}
+
+.MuiListItem-root{
+    background-color:#ececec;
+    margin:0.2rem auto;
+    border-radius: 1rem;
+    max-width:90%;
 }
