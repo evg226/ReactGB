@@ -2,8 +2,9 @@ import "./message.scss";
 
 function Message(props) {
     return (
-        <div className="message">Компонента Message сообщает:
-            <span className={`${props.mes.style}`}>{props.mes.body}</span>
+        <div className="message">
+            <div className="message__author">{props.mes.author}</div>:
+            <div className="message__text">{props.mes.text}</div>
         </div>
     )
 }

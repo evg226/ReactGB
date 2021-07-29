@@ -1,0 +1,26 @@
+form{
+    display: flex;
+    margin:1rem 0;
+    & input{
+        height: 2.5rem;
+        font-size: inherit;
+        padding: 0.5rem;
+        border:1px solid #a1a1a1;
+        outline: none;
+            }
+    & .text{
+        flex:1;
+        border-right: none;
+        color: #454545;
+    }
+    & .button{
+        background: none;
+        color: #505050;
+        cursor: pointer;
+        &:hover{
+            background: #a1a1a1;
+            color:#ffffff;
+        }
+    }
+
+}
