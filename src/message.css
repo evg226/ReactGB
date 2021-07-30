@@ -1,0 +1,10 @@
+.MuiTypography-root {
+  word-wrap: break-word;
+}
+
+.MuiListItem-root {
+  background-color: #ececec;
+  margin: 0.2rem auto;
+  border-radius: 1rem;
+  max-width: 90%;
+}/*# sourceMappingURL=message.css.map */

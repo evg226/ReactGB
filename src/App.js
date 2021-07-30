@@ -13,35 +13,28 @@ const chats = [
 ];
 
 function App() {
-    const [messageList, setMessageList] = useState([]);
-    const [chatList, setChatList] = useState(chats);
+    const [chatList] = useState(chats);
     const [activeChat, setActiveChat] = useState(chats[0]);
+    const [messageList, setMessageList] = useState([{id:1,author:currentAuthor,text:"Вошел в чат: "+activeChat.caption}]);
     const [isInput, setIsInput] = useState(true);
     
     const addNewMessage = useCallback((newMessage) => {
-        setIsInput(() => false);
         setMessageList(prevMessageList => [...prevMessageList, newMessage]);
+        setIsInput(newMessage.author==="Robot"? true: false);
     }, []);
 
     useEffect(() => {
-        let robotProcessedTimeout;    
-        if (messageList.length > 0 && messageList[messageList.length - 1].author === currentAuthor) {
-            addNewMessage({ id: new Date(), author: "Robot", text: "Ваше сообщение: отправлено" });
-            robotProcessedTimeout = setTimeout(() => {
-                setMessageList(prevMessageList => {
-                    prevMessageList[prevMessageList.length - 1].text += " и доставлено";
-                    return prevMessageList;
-                });
-                setIsInput(() => true);
-            }, 1500);
-        }
-        return () => clearTimeout(robotProcessedTimeout);
+        if (!messageList.length || messageList[messageList.length - 1].id===1 || messageList[messageList.length - 1].author === "Robot") return;
+        const timeout = setTimeout(() => {
+            addNewMessage({ id: new Date(), author: "Robot", text: "Ваше сообщение доставлено" });
+        }, 1500);
+        return ()=>clearTimeout(timeout);
     }, [messageList]);
 
-     const selectChat = useCallback((chat) => {
+    const selectChat = useCallback((chat) => {
         setIsInput(() => true);        
         setActiveChat(() => chat);
-        setMessageList(() => []);
+        setMessageList(() => [{id:1,author:currentAuthor,text:"Вошел чат: " + chat.caption}]);
     }, []);
 
     return (
