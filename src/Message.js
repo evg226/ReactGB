@@ -1,10 +1,18 @@
 import "./message.scss";
 
-import {Typography,ListItem,ListItemAvatar,Avatar,ListItemText} from '@material-ui/core';
+import { Paper, List, Typography, ListItem, ListItemAvatar, Avatar, ListItemText } from '@material-ui/core';
+
+function MessageList({messageList}) {
+    return (
+        <Paper variant="outlined">
+            <List className="message-list">{messageList.map(message => < Message key={message.id} mes={message} />)}</List>
+        </Paper>
+    )
+}
 
 function Message(props) {
     return (
-            <ListItem alignItems="flex-start">
+            <ListItem alignItems="flex-start" className={props.mes.author==="Robot"?"message-item message-item_right":"message-item"}>
                 <ListItemAvatar>
                     <Avatar alt={props.mes.author} src="img/1.jpg" />
                 </ListItemAvatar>
@@ -16,4 +24,4 @@ function Message(props) {
     )
 }
 
-export default Message;
+export default MessageList;

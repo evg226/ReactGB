@@ -1,4 +1,4 @@
-import "./MessageInputForm.css";
+import "./MessageInputForm.scss";
 
 import { useState } from "react";
 import { TextField, Button, Box } from "@material-ui/core"
@@ -18,7 +18,7 @@ function MessageInputForm(props) {
   return (
     <form noValidate autoComplete="off" onSubmit={sendNewMessage}>
       <Box className="box">
-      <TextField id="outlined-basic" label="Текст сообщения" variant="outlined" inputRef={input => input && input.focus()}
+      <TextField className="input-form" id="outlined-basic" label="Текст сообщения" variant="outlined" inputRef={input => input && input.focus()}
           value={currentMessageText} onChange={newMessgeChange} />
       </Box>
       <Button variant="outlined" endIcon={<SendIcon>send</SendIcon>} type="submit" value="Отправить"
@@ -28,4 +28,5 @@ function MessageInputForm(props) {
     </form>
   )
 }
+
 export default MessageInputForm;

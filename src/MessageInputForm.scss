@@ -8,8 +8,11 @@ form{
     margin-right: 0.5rem;
 }
 
-.MuiTextField-root{
+.input-form{
     width: 100%;
+    & input {
+        outline:none;
+    }
 }
 
 

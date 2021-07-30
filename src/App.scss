@@ -15,6 +15,7 @@
   padding:0.5rem;
   min-width: 450px;
   max-width: 550px;
+  
   &__box{
     display:flex;
   }
@@ -28,10 +29,10 @@
   min-width:60%;
   flex:1;
   }
+  &__header{
+    text-align: center;
+  }
 }
 
-.MuiTypography-h5{
-  text-align: center;
-}
 
 

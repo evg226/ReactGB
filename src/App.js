@@ -3,7 +3,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { Paper, List, Typography } from '@material-ui/core/'
 
 import MessageInputForm from "./MessageInputForm"
-import Message from "./Message"
+import MessageList from "./Message"
 import Chat from "./Chat"
 
 const currentAuthor = "Evgeny";
@@ -34,25 +34,23 @@ function App() {
     const selectChat = useCallback((chat) => {
         setIsInput(() => true);        
         setActiveChat(() => chat);
-        setMessageList(() => [{id:1,author:currentAuthor,text:"Вошел чат: " + chat.caption}]);
+        setMessageList(() => [{id:1,author:currentAuthor,text:"Вошел в чат: " + chat.caption}]);
     }, []);
 
     return (
         <div className="container">
             <Paper variant="outlined" className="messenger">
-                <Typography variant="h4" gutterBottom>Мессенджер</Typography>
+                <Typography variant="h4" className="messenger__header" gutterBottom>Мессенджер</Typography>
                 <div className="messenger__box">
                     <Paper variant="outlined" className="messenger__chats">
-                        <Typography variant="h5" gutterBottom>Чаты</Typography>
+                        <Typography variant="h5" className="messenger__header" gutterBottom>Чаты</Typography>
                         <List>{chatList.map(chat => <Chat key={chat.id} chat={chat} selectChat={selectChat} />)}</List>
                     </Paper>
                     <Paper variant="outlined" className="messenger__messages">
-                        <Typography variant="h5" gutterBottom>Активный чат: {activeChat.caption}</Typography>
-                            <MessageInputForm classList = "messenger__input"
-                                author={currentAuthor} isInput={isInput} addMessage={addNewMessage} />
-                            <Paper>
-                                <List>{messageList.map(message => < Message key={message.id} mes={message}/>)}</List>
-                            </Paper>
+                        <Typography className="messenger__header" variant="h5" gutterBottom>Активный чат: {activeChat.caption}</Typography>
+                        <MessageInputForm classList="messenger__input"
+                            author={currentAuthor} isInput={isInput} addMessage={addNewMessage} />
+                        <MessageList messageList={messageList} />
                     </Paper>
                 </div>
             </Paper>
