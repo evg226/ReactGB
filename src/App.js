@@ -1,55 +1,59 @@
-// import logo from './logo.svg';
-import { useCallback, useEffect, useState } from 'react';
 import './App.scss';
+import { useCallback, useEffect, useState } from 'react';
+import { Paper, List, Typography } from '@material-ui/core/'
+
 import MessageInputForm from "./MessageInputForm"
-import Message from "./Message"
+import MessageList from "./Message"
+import Chat from "./Chat"
 
 const currentAuthor = "Evgeny";
+const chats = [
+    { id: 1, caption: "Общий" },
+    { id: 2, caption: "Приват" },
+];
 
 function App() {
-    const [messageList, setMessageList] = useState([]);
+    const [chatList] = useState(chats);
+    const [activeChat, setActiveChat] = useState(chats[0]);
+    const [messageList, setMessageList] = useState([{id:1,author:currentAuthor,text:"Вошел в чат: "+activeChat.caption}]);
     const [isInput, setIsInput] = useState(true);
-
+    
     const addNewMessage = useCallback((newMessage) => {
-        setIsInput(() => false);
         setMessageList(prevMessageList => [...prevMessageList, newMessage]);
+        setIsInput(newMessage.author==="Robot"? true: false);
     }, []);
-    
-
-    const robotSay = useCallback((robotText, key) => {
-        addNewMessage({ id: key + new Date(), author: "Robot", text: robotText });
-    }, []);
-    
-
-    let robotProcessedTimeout;
 
     useEffect(() => {
-        if (messageList.length > 0 && messageList[messageList.length - 1].author === currentAuthor) {
-            robotSay(`${currentAuthor}, от Вас получено сообщение "${messageList[messageList.length - 1].text}"`,"accept");
-            robotProcessedTimeout = setTimeout(() => {
-                robotSay(`${currentAuthor}, обработано Ваше сообщение "${messageList[messageList.length - 1].text}"`,"process");
-                setIsInput(() => true);
-            }, 1500);
-        }
+        if (!messageList.length || messageList[messageList.length - 1].id===1 || messageList[messageList.length - 1].author === "Robot") return;
+        const timeout = setTimeout(() => {
+            addNewMessage({ id: new Date(), author: "Robot", text: "Ваше сообщение доставлено" });
+        }, 1500);
+        return ()=>clearTimeout(timeout);
     }, [messageList]);
 
-    useEffect(() => {
-        return () => robotProcessedTimeout && clearTimeout(robotProcessedTimeout);
+    const selectChat = useCallback((chat) => {
+        setIsInput(() => true);        
+        setActiveChat(() => chat);
+        setMessageList(() => [{id:1,author:currentAuthor,text:"Вошел в чат: " + chat.caption}]);
     }, []);
 
     return (
-        <div className = "container">
-            <div className = "messenger">
-                <div className = "messenger__container">
-                    <h1 className="messenger__header" > Мессенджер </h1>
-                    <MessageInputForm classList = "messenger__input"
-                        author={currentAuthor} isInput={isInput} addMessage={addNewMessage} />
-                    <div className="messenger__items">
-                        <h2 className="messenger__items-header"> Сообщения </h2>
-                        {messageList.map(message => < Message key={message.id} mes={message} />)}
-                    </div>
+        <div className="container">
+            <Paper variant="outlined" className="messenger">
+                <Typography variant="h4" className="messenger__header" gutterBottom>Мессенджер</Typography>
+                <div className="messenger__box">
+                    <Paper variant="outlined" className="messenger__chats">
+                        <Typography variant="h5" className="messenger__header" gutterBottom>Чаты</Typography>
+                        <List>{chatList.map(chat => <Chat key={chat.id} chat={chat} selectChat={selectChat} />)}</List>
+                    </Paper>
+                    <Paper variant="outlined" className="messenger__messages">
+                        <Typography className="messenger__header" variant="h5" gutterBottom>Активный чат: {activeChat.caption}</Typography>
+                        <MessageInputForm classList="messenger__input"
+                            author={currentAuthor} isInput={isInput} addMessage={addNewMessage} />
+                        <MessageList messageList={messageList} />
+                    </Paper>
                 </div>
-            </div>
+            </Paper>
         </div>
     );
 }

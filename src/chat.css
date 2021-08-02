@@ -1,0 +1,11 @@
+.chat {
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+}
+.chat:hover {
+  box-shadow: 0 0 10px #333333;
+}
+.chat .MuiAvatar-root {
+  margin: 0 auto;
+}/*# sourceMappingURL=chat.css.map */

@@ -1,18 +1,20 @@
+.MuiTypography-root{
+    word-wrap: break-word;
+}
+
 .message{
-    color: #505050;
-    margin: 0.2rem 0 ;
-    display: flex;
-    & span {
-      
-        cursor: pointer;
-        transition: all 0.5s ease;
-       
+    &-list{
+        display:flex;
+        flex-direction: column;
+        align-items: flex-start;
     }
-    &__author{
-        color:#fa5e5e;
+    &-item{
+        background-color:#ececec;
+        margin:0.1rem 0.3rem;
+        border-radius: 0.5rem;
+        max-width:80%;
+        &_right{
+            align-self: flex-end;
+        }
     }
-    &__text{
-        margin-left:0.5rem;
-    }
-    
 }

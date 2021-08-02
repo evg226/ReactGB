@@ -3,35 +3,36 @@
   padding:0;
   box-sizing: border-box;
 }
+
 .container{
   max-width: 1140px;
-  min-width:360px;
+  min-width:476px;
   padding:1rem;
   margin: 0 auto;
 }
 
 .messenger{
-  display: flex;
-  justify-content: center;
-
-  &__header{
-    color: #454545;
-    }
-  &__container{
-    display:inline-block;
-    
-    border: 1px solid #a1a1a1;
-    padding: 1rem;
-    min-width:340px;
-    max-width: 720px;
+  padding:0.5rem;
+  min-width: 450px;
+  max-width: 550px;
+  
+  &__box{
+    display:flex;
   }
-  &__items{
-    border: 1px solid #a1a1a1;
-    padding:0.5rem 0.5rem 1rem 0.5rem;
-    &-header{
-      padding:0.3rem 0;
-      font-weight: 500;
-      color:#505050;
-    }
+  &__chats{
+    padding:1rem 0.3rem;
+    margin-right: 0.5rem;
+    width:120px;
+  }
+  &__messages{
+  padding: 1rem;
+  min-width:60%;
+  flex:1;
+  }
+  &__header{
+    text-align: center;
   }
 }
+
+
+
