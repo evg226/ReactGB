@@ -1,0 +1,38 @@
+*{
+  margin: 0;
+  padding:0;
+  box-sizing: border-box;
+}
+
+.container{
+  max-width: 1140px;
+  min-width:476px;
+  padding:1rem;
+  margin: 0 auto;
+}
+
+.messenger{
+  padding:0.5rem;
+  min-width: 450px;
+  max-width: 550px;
+  
+  &__box{
+    display:flex;
+  }
+  &__chats{
+    padding:1rem 0.3rem;
+    margin-right: 0.5rem;
+    width:120px;
+  }
+  &__messages{
+  padding: 1rem;
+  min-width:60%;
+  flex:1;
+  }
+  &__header{
+    text-align: center;
+  }
+}
+
+
+
