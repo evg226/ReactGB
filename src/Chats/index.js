@@ -1,8 +1,7 @@
 import ChatList from "../ChatList";
-import MessageInputForm from "../MessageInputForm"
-import { useState } from "react";
+import { useState,useCallback } from "react";
 import { useParams } from "react-router";
-import { Paper, Typography } from '@material-ui/core/';
+import { Typography } from '@material-ui/core/';
 
 const AUTHORS={
     BOT:"Robot",
@@ -10,45 +9,47 @@ const AUTHORS={
 }
 
 const initialChats = {
-    id1: { name: "Main", messages: [{ text: "Welcome to chat", author: AUTHORS.BOT}] },
-    id2: { name: "Private", messages: [{ text: "Welcome to chat", author: AUTHORS.BOT}] },
+    "0": { name: "Главный", messages: [{id:1, text: "Welcome to chat", author: AUTHORS.BOT}] },
+    "1": { name: "Приватный", messages: [{id:1, text: "Welcome to chat", author: AUTHORS.BOT}] },
 }
 
 function Chats() {
     const { chatId } = useParams();
     const [chats, setChats] = useState(initialChats);
-    const [isInput, setIsInput] = useState(true);
     
-    const addNewMessage = (newMessage) => {
-        setChats(() => {
-            
-        });
-        setIsInput(newMessage.author==="Robot"? true: false);
+    const addMessage = useCallback(
+        (newMessage) => {
+            setChats(
+                {
+                    ...chats,
+                    [chatId]: {
+                        ...chats[chatId],
+                        messages: [...chats[chatId].messages, newMessage]
+                    }
+                }
+            )
+        }, [chats, chatId]);
+    
+    const removeChat = (id) => {
+        if (id == 0) return;
+        let state = { ...chats };
+        delete state[id];
+        setChats(state);
     }
 
-    // useEffect(() => {
-    //     if (!messageList.length || messageList[messageList.length - 1].id===1 || messageList[messageList.length - 1].author === "Robot") return;
-    //     const timeout = setTimeout(() => {
-    //         addNewMessage({ id: new Date(), author: "Robot", text: "Ваше сообщение доставлено" });
-    //     }, 1500);
-    //     return ()=>clearTimeout(timeout);
-    // }, [messageList]);
+    const addChat = (newChatName) => {
+         const newChat = { name: newChatName, messages: [{ id: 1, text: "Welcome to chat", author: AUTHORS.BOT }] };
+         let newId;
+         for (newId = 1; chats[newId]; newId++){ }
+         setChats({ ...chats, [newId]: newChat });
+    }
 
     return (
         <div className="container">
-            <Paper variant="outlined" className="messenger">
-                <Typography variant="h4" className="messenger__header" gutterBottom>Мессенджер</Typography>
-                <div className="messenger__box">
-                    <ChatList chatId={chatId} chats={chats} />
-                    <Paper variant="outlined" className="messenger__messages">
-                        <Typography className="messenger__header" variant="h5" gutterBottom>Активный чат: {chats[chatId]}</Typography>
-                        <MessageInputForm classList="messenger__input"
-                            author={AUTHORS.ME} isInput={isInput} addMessage={addNewMessage} />
-                        {/* <MessageList messageList={messageList} /> */}
-                    </Paper>
-                </div>
-            </Paper>
+            <Typography variant="h4" className="page-header" gutterBottom>Страница чатов</Typography>
+            <ChatList chatId={chatId} chats={chats} AUTHORS={AUTHORS} addMessage={addMessage} removeChat={removeChat} addChat={addChat}/>
         </div>
+        
     );
 
 }
