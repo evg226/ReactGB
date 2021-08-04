@@ -1,10 +1,10 @@
 import "./style.scss";
 
 import { useCallback } from 'react';
-import { Typography, Paper, List, ListItem, Avatar, ListItemAvatar, ListItemText } from '@material-ui/core/';
+import { Typography, Paper, List, ListItem, Avatar, ListItemAvatar, ListItemText,Button } from '@material-ui/core/';
 import { useDispatch, useSelector } from 'react-redux';
 // import { store } from "../../Store";
-import {CHOOSE_USER} from "../../Store/action";
+import {CHOOSE_USER,ADD_USER} from "../../Store/action";
 
 function Profile() {
     // const state = store.getState();
@@ -12,10 +12,22 @@ function Profile() {
     const dispatch = useDispatch();
     // const [dummy, setDummy] = useState();
 
-    const setShowName = useCallback(() => {
-        dispatch({ type:CHOOSE_USER});
+    const setShowName = useCallback((id) => {
+        dispatch({ type:CHOOSE_USER,id});
         // setDummy({});
     }, [dispatch]);
+
+    const addNewUser = useCallback(() => {
+        const newUser = {
+            id:state.length,
+            selected: false,
+            name: "New User Name",
+            surname: "New User Surname",
+            username: "userlogin"
+        }
+        dispatch({ type:ADD_USER,newUser});
+        // setDummy({});
+    }, [dispatch,state.length]);
 
     return (
         <div className="container">
@@ -24,27 +36,26 @@ function Profile() {
             
             <Paper variant="outlined">
                 <List className="user-list">
-                    
-                    <ListItem alignItems="flex-start" className={state.selected ? "user-item user-item_selected" : "user-item"} onClick={setShowName}>
-                        <input className="user-check" type="checkbox" checked={state.selected} value={state.selected}  />
+                    { state.map (item=>
+                        <ListItem alignItems="flex-start" key={ item.id} className={item.selected ? "user-item user-item_selected" : "user-item"} onClick={()=>setShowName(item.id)}>
+                            <input className="user-check" type="checkbox" checked={item.selected} value={item.selected} readOnly />
                         <ListItemAvatar>
-                            <Avatar alt={state.username} src="img/1.jpg" />
+                            <Avatar alt={item.username} src="img/1.jpg" />
                         </ListItemAvatar>
                         <ListItemText
-                            primary={<Typography component="div" variant="body1" color="textPrimary">{state.username}</Typography>}
+                            primary={<Typography component="div" variant="body1" color="textPrimary">{item.username}</Typography>}
                             secondary={<Typography component="div" variant="body2" color="textPrimary">
-                                <div>{state.name +" " + state.surname}</div>
+                                <div>{item.name + " " + item.surname}</div>
                                 <div>&nbsp;</div>
                                 <div><b>Описание</b></div>
                                 <div>dfdfd dfdsasd klklkl aasdlfkldsk a sdlkdlk a sdkfldskl a asdklksl</div>
-                                
                             </Typography>}
                         />
-                    </ListItem>
+                        </ListItem>
+                         )}
                 </List>
             </Paper>
-
-            
+            <div className="user-button"><Button onClick={addNewUser} >Добавить пользователя</Button></div>
             
         </div>
     )

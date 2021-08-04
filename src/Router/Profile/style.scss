@@ -1,6 +1,7 @@
 .user{
     &-list{
         display:flex;
+        flex-wrap:          wrap;
     }
     
     &-item{
@@ -25,4 +26,10 @@
             width: 2rem;
             height: 2rem;
         }
+    &-button{
+        border:1px solid #cecece;
+        // text-align: center;
+        margin: 1rem auto;
+        display: inline-block;
+    }
 }
