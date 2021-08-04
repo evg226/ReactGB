@@ -1,0 +1,25 @@
+.nav{
+    display:flex;
+    list-style-type: none;
+    margin: 1rem 0;
+    padding: 0 0 1rem;
+    border-bottom: 1px solid #e9e9e9;
+    & a {
+        text-decoration: none; 
+        display: inline-block;
+        padding: 1rem 2rem;
+        margin: 0 0.5rem 0 0;    
+        color:#353535;
+        font-size: 1.2rem;
+        transition: all 0.3s ease;
+
+        &:hover{
+            color: #ffffff;
+            background: #757575;
+        }
+    }
+}
+
+.page-header{
+   text-align: center;
+}
