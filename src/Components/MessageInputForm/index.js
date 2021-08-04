@@ -1,4 +1,4 @@
-import "./MessageInputForm.scss";
+import "./style.scss";
 
 import { useState } from "react";
 import { TextField, Button, Box } from "@material-ui/core"

@@ -1,11 +1,11 @@
-import "./message.scss";
+import "./style.scss";
 
 import { Paper, List, Typography, ListItem, ListItemAvatar, Avatar, ListItemText } from '@material-ui/core';
 
 function MessageList({messageList}) {
     return (
         <Paper variant="outlined">
-            <List className="message-list">{messageList.map(message => < Message key={message.id} mes={message} />)}</List>
+            <List className="message-list">{messageList.map(message => < Message key={message.id} mes={message} />)} </List>
         </Paper>
     )
 }
