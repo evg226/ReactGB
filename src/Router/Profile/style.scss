@@ -1,0 +1,35 @@
+.user{
+    &-list{
+        display:flex;
+        flex-wrap:          wrap;
+    }
+    
+    &-item{
+        max-width:30%;
+        border:1px solid #cecece;
+        margin: 0 1rem;
+        cursor: pointer;
+        height: 100%;
+        position: relative;
+        margin: 1rem;
+        padding: 1rem !important;
+        
+        &_selected{
+            box-shadow: 0 0 1rem #222222;
+        }
+    }
+
+    &-check{
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            width: 2rem;
+            height: 2rem;
+        }
+    &-button{
+        border:1px solid #cecece;
+        // text-align: center;
+        margin: 1rem auto;
+        display: inline-block;
+    }
+}

@@ -1,7 +1,7 @@
 import "./style.scss";
-import Home from "../Home";
-import Profile from "../Profile";
-import Chats from "../Chats";
+import Home from "./Home";
+import Profile from "./Profile";
+import Chats from "./Chats";
 
 import { BrowserRouter, Switch, Link, Route } from "react-router-dom";
 
