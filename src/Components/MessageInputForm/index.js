@@ -22,7 +22,7 @@ function MessageInputForm(props) {
           value={currentMessageText} onChange={newMessgeChange} />
       </Box>
       <Button variant="outlined" endIcon={<SendIcon>send</SendIcon>} type="submit" value="Отправить"
-        disabled={(!currentMessageText || !props.isInput)}>
+        disabled={(!currentMessageText /*|| !props.isInput*/ )}>
           Send
       </Button>
     </form>

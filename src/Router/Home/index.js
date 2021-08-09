@@ -7,38 +7,38 @@ function Home() {
         <div className="container">
             <Typography variant="h4" className="page-header" gutterBottom>Добро пожаловать в Мессенджер</Typography>
             <div className="main-page__box">
-            <Link to="/profile" className="main-page__item">
-                <Card variant="outlined">
-                    <CardContent>
-                        <Typography  color="textSecondary" gutterBottom>
-                            Войти в систему
-                        </Typography>
-                        <Typography variant="h5" component="h2">Профиль пользователя</Typography>
-                        <Typography color="textSecondary">Вход, регистрация</Typography>
-                        <Typography variant="body2" component="p"> Войдите в систему<br />Нет учетной записи - зарегистрируйтесь
-                        </Typography>
-                    </CardContent>
-                    <CardActions>
-                        <Button size="small">Войти сейчас</Button>
-                    </CardActions>
-                </Card>
-            </Link>
-            <Link to="/chats" className="main-page__item">
-                <Card variant="outlined">
-                    <CardContent>
-                        <Typography  color="textSecondary" gutterBottom>
-                            Перейти к чатам
-                        </Typography>
-                        <Typography variant="h5" component="h2">Список чатов</Typography>
-                        <Typography color="textSecondary">Чатрум</Typography>
-                        <Typography variant="body2" component="p"> Начните отправлять сообщения<br />Нет учетной записи - зарегистрируйтесь
-                        </Typography>
-                    </CardContent>
-                    <CardActions>
-                        <Button size="small">Перейти к чатам</Button>
-                    </CardActions>
-                </Card>
-            </Link>
+                <Link to="/profile" className="main-page__item">
+                    <Card variant="outlined">
+                        <CardContent>
+                            <Typography  color="textSecondary" gutterBottom>
+                                Войти в систему
+                            </Typography>
+                            <Typography variant="h5" component="h2">Профиль пользователя</Typography>
+                            <Typography color="textSecondary">Вход, регистрация</Typography>
+                            <Typography variant="body2" component="p"> Войдите в систему<br />Нет учетной записи - зарегистрируйтесь
+                            </Typography>
+                        </CardContent>
+                        <CardActions>
+                            <Button size="small">Войти сейчас</Button>
+                        </CardActions>
+                    </Card>
+                </Link>
+                <Link to="/chats" className="main-page__item">
+                    <Card variant="outlined">
+                        <CardContent>
+                            <Typography  color="textSecondary" gutterBottom>
+                                Перейти к чатам
+                            </Typography>
+                            <Typography variant="h5" component="h2">Список чатов</Typography>
+                            <Typography color="textSecondary">Чатрум</Typography>
+                            <Typography variant="body2" component="p"> Начните отправлять сообщения<br />Нет учетной записи - зарегистрируйтесь
+                            </Typography>
+                        </CardContent>
+                        <CardActions>
+                            <Button size="small">Перейти к чатам</Button>
+                        </CardActions>
+                    </Card>
+                </Link>
             </div>
         </div>
     )

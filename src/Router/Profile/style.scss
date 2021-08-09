@@ -1,11 +1,13 @@
 .user{
     &-list{
         display:flex;
-        flex-wrap:          wrap;
+        flex-wrap: wrap;
     }
     
     &-item{
+        // height: 100%;
         max-width:30%;
+        // max-height:200px;
         border:1px solid #cecece;
         margin: 0 1rem;
         cursor: pointer;
@@ -16,6 +18,9 @@
         
         &_selected{
             box-shadow: 0 0 1rem #222222;
+        }
+        &:active{
+            transform: scale(0.9);
         }
     }
 
@@ -31,5 +36,24 @@
         // text-align: center;
         margin: 1rem auto;
         display: inline-block;
+    }
+}
+
+@media screen and (max-width:950px) {
+    .user{
+        &-item{
+            max-width:45%;
+        }
+    }
+}
+@media screen and (max-width:700px) {
+    .user{
+        &-list{
+            justify-content: center;
+        }
+
+        &-item{
+            max-width:90%;
+        }
     }
 }

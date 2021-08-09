@@ -1,44 +1,40 @@
 import "./style.scss";
 
+import {getProfiles } from "../../Store/selectors";
 import { useCallback } from 'react';
 import { Typography, Paper, List, ListItem, Avatar, ListItemAvatar, ListItemText,Button } from '@material-ui/core/';
-import { useDispatch, useSelector } from 'react-redux';
-// import { store } from "../../Store";
-import {CHOOSE_USER,ADD_USER} from "../../Store/action";
+import { shallowEqual, useDispatch, useSelector } from 'react-redux';
+import { changeUser, addUser } from "../../Store/actions";
+import { addDefaultChat } from "../../Store/actions";
 
 function Profile() {
-    // const state = store.getState();
-    const state = useSelector((state) => state);
     const dispatch = useDispatch();
-    // const [dummy, setDummy] = useState();
-
-    const setShowName = useCallback((id) => {
-        dispatch({ type:CHOOSE_USER,id});
-        // setDummy({});
+    const state = useSelector(getProfiles, shallowEqual);
+    
+    const setUser = useCallback((id) => {
+        dispatch(changeUser(id));
     }, [dispatch]);
 
     const addNewUser = useCallback(() => {
         const newUser = {
-            id:state.length,
-            selected: false,
-            name: "New User Name",
-            surname: "New User Surname",
+            id:state.list.length,
+            name: "User Name",
+            surname: "Surname",
             username: "userlogin"
         }
-        dispatch({ type:ADD_USER,newUser});
-        // setDummy({});
-    }, [dispatch,state.length]);
+        dispatch(addUser(newUser));
+        dispatch(addDefaultChat(newUser.id));
+    }, [dispatch,state]);
 
     return (
         <div className="container">
             <Typography variant="h4" className="page-header"
                 gutterBottom>Профиль пользователя</Typography>
-            
             <Paper variant="outlined">
                 <List className="user-list">
-                    { state.map (item=>
-                        <ListItem alignItems="flex-start" key={ item.id} className={item.selected ? "user-item user-item_selected" : "user-item"} onClick={()=>setShowName(item.id)}>
-                            <input className="user-check" type="checkbox" checked={item.selected} value={item.selected} readOnly />
+                    { state.list.map (item =>
+                        <ListItem alignItems="flex-start" key={ item.id} className={item.id===state.active ? "user-item user-item_selected" : "user-item"} onClick={()=>setUser(item.id)}>
+                            <input className="user-check" type="checkbox" checked={item.id===state.active} value={item.id===state.active} readOnly />
                         <ListItemAvatar>
                             <Avatar alt={item.username} src="img/1.jpg" />
                         </ListItemAvatar>
@@ -56,7 +52,6 @@ function Profile() {
                 </List>
             </Paper>
             <div className="user-button"><Button onClick={addNewUser} >Добавить пользователя</Button></div>
-            
         </div>
     )
 }
