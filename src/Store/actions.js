@@ -1,4 +1,4 @@
-import { AUTHORS } from "../constants";
+// import { AUTHORS } from "../constants";
 
 export const CHOOSE_USER = "PROFILE::CHOOSE_USER";
 export const ADD_USER = "PROFILE::ADD_USER";
@@ -7,6 +7,7 @@ export const ADD_CHAT = "CHATS::ADD_CHAT";
 export const REMOVE_CHAT = "CHATS::REMOVE_CHAT";
 export const ADD_MESSAGE = "CHATS::ADD_MESSAGE";
 export const ADD_DEFAULT_CHAT = "CHATS::ADD_DEFAULT_CHAT";
+export const ADD_MESSAGE_WITH_SAGA = "CHATS::ADD_MESSAGE_WITH_SAGA";
 
 export const changeUser = (userId) => {
     return {
@@ -43,14 +44,21 @@ export const addMessage = (userId, chatId, message) => {
     }
 }
 
-let timeOut;
+// let timeOut;
 
-export const addMessageWithRobot = (userId, chatId, message) => (dispatch) => {
-    dispatch(addMessage(userId, chatId, message));
-    if (timeOut) clearTimeout(timeOut);
-    timeOut=setTimeout(() => {
-        dispatch(addMessage(userId, chatId, { id: new Date(), author: AUTHORS.BOT, text: "Ваше сообщение доставлено" }));
-    },1500);
+// export const addMessageWithRobot = (userId, chatId, message) => (dispatch) => {
+//     dispatch(addMessage(userId, chatId, message));
+//     if (timeOut) clearTimeout(timeOut);
+//     timeOut=setTimeout(() => {
+//         dispatch(addMessage(userId, chatId, { id: new Date(), author: AUTHORS.BOT, text: "Ваше сообщение доставлено" }));
+//     },1500);
+// }
+
+export const addMessageWithSaga = (userId, chatId, message) => {
+    return {
+        type: ADD_MESSAGE_WITH_SAGA,
+        payload: {  userId, chatId, message }
+    }
 }
 
 export const addDefaultChat = (userId) => {

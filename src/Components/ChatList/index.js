@@ -1,7 +1,7 @@
 import "./style.scss";
 import MessageInputForm from "../MessageInputForm";
 import MessageList from "../MessageList";
-import { addChat,deleteChat,addMessageWithRobot } from "../../Store/actions";
+import { addChat,deleteChat, addMessageWithSaga } from "../../Store/actions";
 import { getProfiles,getChatsByUserId } from "../../Store/selectors";
 import {Link} from "react-router-dom";
 import React, { useState, useRef, useCallback, useMemo } from "react";
@@ -27,7 +27,7 @@ function ChatList({ chatId }) {
     }, [dispatch,activeUser]);
 
     const addNewMessage = useCallback((newMessage) => {
-        dispatch(addMessageWithRobot(activeUser.id,chatId,newMessage));
+        dispatch(addMessageWithSaga (activeUser.id,chatId,newMessage));
         // setIsInput(newMessage.author==="Robot"? true: false);
     },[dispatch,activeUser,chatId]);
     
