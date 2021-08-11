@@ -13,7 +13,13 @@
     & .MuiAvatar-root{
         margin: 0 auto;
     }
- 
+    
+    & .MuiListItemText-root{
+      max-width: 90px;
+      word-wrap:break-word;
+      text-align: center;
+    }
+
     &__close{
       position: absolute;
       top:0;
@@ -27,16 +33,33 @@
     &__form{
       margin: 0;
     }
+    
     &__input{
-      width:100%;
+      width: 40px;
       padding:0.2rem;
       border:1px solid #a3a3a3;
       background: #ffffff;
       font-size:1rem;
+      outline: none;
+      
+      &-button{
+        // display: none;
+        cursor: pointer;
+        padding: 0 0.5rem;
+        background: #e0e0e0;
+        &:hover{
+          background: #a3a3a3;
+          color: #ffffff;
+        }
+      }
+
       &:focus{
         width:120px;
         padding: 0.2rem 1rem;
         background: #ffffff;
+        // & ~ .chat__input-button{
+        //   display: inline-block;
+        // }
       }
     }
     

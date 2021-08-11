@@ -1,12 +1,16 @@
 import "./app.css"
 import Router from "./Router";
 import { Provider } from "react-redux";
-import { store } from "./Store";
+import { persistor, store } from "./Store";
+import { PersistGate } from "redux-persist/integration/react";
+import { CircularProgress } from "@material-ui/core";
 
 function App() {
     return (
         <Provider store={store}>
-            <Router />
+            <PersistGate persistor={persistor} loading={<CircularProgress />}>
+                <Router />
+            </PersistGate>                
         </Provider>
     )
 }

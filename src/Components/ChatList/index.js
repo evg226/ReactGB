@@ -1,19 +1,74 @@
 import "./style.scss";
 import MessageInputForm from "../MessageInputForm";
 import MessageList from "../MessageList";
+import { addChat,deleteChat,addMessageWithRobot } from "../../Store/actions";
+import { getProfiles,getChatsByUserId } from "../../Store/selectors";
 import {Link} from "react-router-dom";
-import React, { useState, useRef, useCallback,useEffect } from "react";
+import React, { useState, useRef, useCallback, useMemo } from "react";
 import { Paper, List, Typography, ListItem, ListItemAvatar, Avatar, ListItemText } from '@material-ui/core';
+import { shallowEqual, useDispatch, useSelector } from "react-redux";
+import { AUTHORS } from "../../constants";
+
+function ChatList({ chatId }) {
+    
+    const profile = useSelector(getProfiles,shallowEqual);
+    const activeUser = profile.list[profile.active];
+    const getChats = useMemo(() => getChatsByUserId(activeUser.id),[activeUser]);
+    const chats = useSelector(getChats);
+    const dispatch = useDispatch();
+    AUTHORS.ME = activeUser ? activeUser.name : AUTHORS.ME;
+    
+    const removeChat = useCallback((id) => {
+        if (+id !== 0) dispatch(deleteChat(id, activeUser.id));
+    }, [dispatch,activeUser]);
+
+    const addNewChat = useCallback((newChatName) => {
+        dispatch(addChat(newChatName,activeUser.id));
+    }, [dispatch,activeUser]);
+
+    const addNewMessage = useCallback((newMessage) => {
+        dispatch(addMessageWithRobot(activeUser.id,chatId,newMessage));
+        // setIsInput(newMessage.author==="Robot"? true: false);
+    },[dispatch,activeUser,chatId]);
+    
+    return (
+          <div className="messenger__box">
+              <Paper variant="outlined" className="messenger__chats">
+                  <Typography variant="h5" className="messenger__header" gutterBottom>Чаты</Typography>
+                <List>
+                    {Object.keys(chats).map(id =>
+                          <Link key={id} to={`/chats/${id}`}><Chat key={id} id={id} chat={chats[id]} active={id === chatId} removeChat={removeChat} /></Link>
+                    )}
+                    <Chat addChat={ addNewChat}/>
+                    </List>
+              </Paper>
+              <Paper variant="outlined" className="messenger__messages">
+                  <Typography className="messenger__header" variant="h5" gutterBottom>
+                      {(!!chats[chatId]) ? "Активный чат: " + chats[chatId].name : "Выберите чат"}
+                  </Typography>
+                  {
+                      !!chats[chatId] &&
+                      <>
+                          <MessageInputForm className="messenger__input" author={AUTHORS.ME} /*isInput={isInput}*/ addMessage={addNewMessage} />
+                          <MessageList messageList={chats[chatId].messages} />
+                      </>
+                  }
+                </Paper>
+            </div>
+         )
+}
 
 function Chat({ id, chat, active, removeChat, addChat }) {
-    const [newChatName, setNewChatName] = useState("Новый..");
+    const [newChatName, setNewChatName] = useState("Новый");
     const refInput = useRef(null);
     const newChatSet = (e) => setNewChatName(e.target.value);
 
     const addNewChat = (e) => {
         e.preventDefault();
-        addChat(newChatName);
-        setNewChatName("Новый..");
+        if (!!newChatName) {
+            addChat(newChatName);
+            setNewChatName("Новый");
+        }
     }
     
     const removeThisChat = (e) => {
@@ -29,68 +84,19 @@ function Chat({ id, chat, active, removeChat, addChat }) {
             <ListItemText
                 primary={
                     !addChat ?
-                        <Typography component="span" variant="body1" color="textPrimary">{chat.name}</Typography>
+                        <Typography className="chat__text" component="span" variant="body1" color="textPrimary">{chat.name}</Typography>
                         :
                         <form action="" className="chat__form" onSubmit={addNewChat}>
-                            <input className="chat__input" ref={refInput} type="text" value={newChatName} onChange={newChatSet}/>
+                            <input className="chat__input" ref={refInput} type="text" value={newChatName} onChange={newChatSet} />
+                            <input type="submit" className="chat__input chat__input-button" value="ОК" />
                         </form>
-                        // <Typography component="span" variant="body1" color="textPrimary">{chat.name}+11111</Typography>
                 }
-                // secondary={<Typography component="span" variant="body2" color="textPrimary">{props.chat.caption}</Typography>}
             />
             {!addChat &&
                 <div className="chat__close" onClick={removeThisChat}>x</div>
             }
         </ListItem>
     )
-}
-
-function ChatList({ chatId, chats, AUTHORS, addMessage, removeChat, addChat  }) {
-    const [isInput, setIsInput] = useState(true);
-    
-    const addNewMessage = useCallback((newMessage) => {
-        addMessage(newMessage);
-        setIsInput(newMessage.author==="Robot"? true: false);
-    }, [addMessage]);
-    
-    useEffect(() => {
-        if (!chats[chatId] || !chats[chatId].messages.length ||
-            chats[chatId].messages[chats[chatId].messages.length - 1].id === 1 ||
-            chats[chatId].messages[chats[chatId].messages.length - 1].author === "Robot") return;
-        const timeout = setTimeout(() => {
-            addNewMessage({ id: new Date(), author: "Robot", text: "Ваше сообщение доставлено" });
-        }, 1500);
-        return ()=>clearTimeout(timeout);
-    }, [chats,chatId,addNewMessage]);
-    
-    return (
-          <div className="messenger__box">
-              <Paper variant="outlined" className="messenger__chats">
-                  <Typography variant="h5" className="messenger__header" gutterBottom>Чаты</Typography>
-                <List>
-                    {Object.keys(chats).map(id =>
-                          <Link key={id} to={`/chats/${id}`}><Chat key={id} id={id} chat={chats[id]} active={id === chatId} removeChat={removeChat} /></Link>
-                    )}
-                    <Chat addChat={ addChat}/>
-                    </List>
-              </Paper>
-              <Paper variant="outlined" className="messenger__messages">
-                  <Typography className="messenger__header" variant="h5" gutterBottom>
-                      {(!!chats[chatId]) ? "Активный чат: " + chats[chatId].name : "Выберите чат"}
-                  </Typography>
-                  {
-                      !!chats[chatId] &&
-                      <>
-                          <MessageInputForm className="messenger__input" author={AUTHORS.ME} isInput={isInput} addMessage={addNewMessage} />
-                          <MessageList messageList={chats[chatId].messages} />
-                      </>
-                  }
-                    
-                        
-                        
-                </Paper>
-            </div>
-         )
 }
 
 export default ChatList;
