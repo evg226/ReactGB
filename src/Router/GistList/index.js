@@ -1,38 +1,21 @@
 import { List, Typography, Paper, ListItem,ListItemText,ListItemAvatar, Avatar,CircularProgress } from "@material-ui/core";
-import { useEffect, useState } from "react";
-import { API_URL_PUBLIC } from "../../constants";
-
-// const gistList = [];
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchGists } from "../../Store/actions";
+import { takeError, takeGistList, takeGistLoading } from "../../Store/selectors";
 
 function GistList() {
 
-    const [gistList, setGistList] = useState([]);
-    const [err, setErr] = useState("");
-    const [loading, setLoading] = useState(false);
-
+    const dispatch = useDispatch();
+    const gistList = useSelector(takeGistList);
+    const loading = useSelector(takeGistLoading);
+    const err = useSelector(takeError);
+    
     useEffect(() => {
-        setLoading (true);
-        fetch(API_URL_PUBLIC)
-            .then(responce => {
-                if (!responce.ok) {
-                    setErr(responce.status);
-                    setLoading (false);
-                    throw new Error("Ошибка запроса: " + responce.status);
-                }
-                return responce.json();
-            })
-            .then(result => {
-                setGistList(result);
-                setLoading (false);
-            })
-            .catch(error => {
-                console.log(error);
-                setLoading (false);
-            });
-    },[])
+        dispatch(fetchGists());
+    }, [dispatch]);
 
     return (
-        
         <div className="container">
             <Typography variant="h4" className="page-header"
                 gutterBottom>Работа со сторонними API </Typography>
