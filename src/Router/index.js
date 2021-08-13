@@ -2,6 +2,7 @@ import "./style.scss";
 import Home from "./Home";
 import Profile from "./Profile";
 import Chats from "./Chats";
+import GistList from "./GistList";
 
 import { BrowserRouter, Switch, Link, Route } from "react-router-dom";
 
@@ -13,11 +14,13 @@ function Router() {
                     <li><Link to="/">Главная</Link></li>
                     <li><Link to="/profile">Профиль</Link></li>
                     <li><Link to="/chats">Чаты</Link></li>
+                    <li><Link to="/api">API</Link></li>
                 </ul>
             </div>
             <Switch>
                 <Route path="/profile"><Profile /></Route>
                 <Route path="/chats/:chatId?" exact><Chats /></Route>
+                <Route path="/api"><GistList /></Route>
                 <Route path="/" exact><Home /></Route>
                 {/* <Route path="/path1" render={() => <Component />} />
                 <Route path="/path2" component={Component} /> */}
