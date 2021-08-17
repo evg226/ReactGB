@@ -73,11 +73,6 @@ export const addDefaultChat = (userId) => {
 }
 
 export const loadingGists = (loadingStatus) => {
-    console.log({
-        type: LOADING_GISTS,
-        payload: loadingStatus
-    })
-    
     return {
         type: LOADING_GISTS,
         payload: loadingStatus

@@ -1,4 +1,5 @@
-import { List, Typography, Paper, ListItem,ListItemText,ListItemAvatar, Avatar,CircularProgress } from "@material-ui/core";
+import "./style.scss";
+import { List, Typography, Paper, ListItem, ListItemText, ListItemAvatar, Avatar, CircularProgress, Button } from "@material-ui/core";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchGists } from "../../Store/actions";
@@ -15,24 +16,33 @@ function GistList() {
         dispatch(fetchGists());
     }, [dispatch]);
 
+    const handleNew = () => {
+        dispatch(fetchGists());
+    }
+
     return (
         <div className="container">
             <Typography variant="h4" className="page-header"
                 gutterBottom>Работа со сторонними API </Typography>
             <Paper variant="outlined">
                 {   loading? <CircularProgress />:
-                    err ? <Typography variant="h6">Ошибка запроса: {err}</Typography> :
+                    err ?
+                        <div className="error">
+                            <Typography style={{color:"red"}} variant="h6">Ошибка запроса: {err}</Typography>
+                            <Button variant="contained" color="secondary" onClick={handleNew} >Попробовать заново</Button>
+                        </div>
+                        :
                     <List>
-                        {gistList.map((item) =>
-                            <a href={item.html_url} key={item.id}>
+                        {gistList.data.map((item) =>
+                            <a href={item.api_link} key={item.id}>
                                 <ListItem alignItems="flex-start">
                                     <ListItemAvatar>
                                         <Avatar alt={item.url} src={`img/${item.id}.jpg`} />
                                     </ListItemAvatar>
                                     <ListItemText
-                                        primary={<Typography component="div" variant="body1" color="textPrimary">{item.url}</Typography>}
+                                        primary={<Typography component="div" variant="body1" color="textPrimary">{item.title}</Typography>}
                                         secondary={<Typography component="div" variant="body2" color="textPrimary">
-                                            {item.updated_at}
+                                            {item.artist_display}
                                         </Typography>}
                                     />
                                 </ListItem>
