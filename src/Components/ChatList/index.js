@@ -72,10 +72,12 @@ function Chat({ id, chat, active, removeChat, addChat }) {
         }
     }
     
-    const removeThisChat = (e) => {
-        e.preventDefault();
-        removeChat(id);
-    }
+    const profile = useSelector(getProfiles,shallowEqual);
+    const activeUser = profile.list[profile.active];
+    const getChats = useMemo(() => getChatsByUserId(activeUser.id),[activeUser]);
+    const chats = useSelector(getChats);
+    const dispatch = useDispatch();
+    AUTHORS.ME = activeUser ? activeUser.name : AUTHORS.ME;
     
     return (
         <ListItem alignItems="center" className={active ? "chat chat_active" : "chat"} onClick={addChat?()=>refInput.current?.focus():null} >
