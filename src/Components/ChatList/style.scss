@@ -32,6 +32,7 @@
     }
     &__form{
       margin: 0;
+      z-index: 100;
     }
     
     &__input{
@@ -41,12 +42,14 @@
       background: #ffffff;
       font-size:1rem;
       outline: none;
+      z-index: 100;
       
       &-button{
         // display: none;
         cursor: pointer;
         padding: 0 0.5rem;
         background: #e0e0e0;
+        z-index: 100;
         &:hover{
           background: #a3a3a3;
           color: #ffffff;

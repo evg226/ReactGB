@@ -1,61 +1,41 @@
 
-import { ADD_CHAT, REMOVE_CHAT,ADD_MESSAGE, ADD_DEFAULT_CHAT } from "./actions";
+import { AccessTimeTwoTone } from "@material-ui/icons";
+import { logDOM } from "@testing-library/react";
+import { ADD_CHAT, REMOVE_CHAT,ADD_MESSAGE, LOAD_MESSAGES } from "./actions";
 
-const defaultChats = {
+const initialState = {
     "1": { name: "Главный", messages: [] },
-    "2": { name: "Приватный", messages: [] },
-}
-
-const initialState =
-{
-    0: defaultChats,
-    1: {}
 }
 
 export const reducerChats=(state = initialState, action) => {
     switch (action.type) {
         case ADD_CHAT: {
-            const newChat = { name: action.payload.chatName, messages: [] };
             let newId;
-            for (newId = 1; !!state[action.payload.userId][newId]; newId++){ }     
+            for (newId = 1; !!state[newId]; newId++) { }
             return {
                 ...state,
-                [action.payload.userId]:
-                {
-                    ...state[action.payload.userId],
-                    [newId]: newChat
-                }
+                [newId]: { name: action.payload.chatName, messages: [] }
             };
         }
         case REMOVE_CHAT: {
-            let chats = { ...state[action.payload.userId] };
+            let chats = { ...state };
             delete chats[action.payload.chatId];
-                 return {
-                ...state,
-                [action.payload.userId]: chats 
-            }
+            return chats;
         }
         case ADD_MESSAGE: {
             return {
                 ...state,
-                [action.payload.userId]: {
-                    ...state[action.payload.userId],
-                    [action.payload.chatId]: {
-                        ...state[action.payload.userId][action.payload.chatId],
-                        messages: [
-                            ...state[action.payload.userId][action.payload.chatId].messages,
-                            action.payload.message
-                        ]
-                    }
+                [action.payload.chatId]: {
+                    ...state[action.payload.chatId],
+                    messages: [
+                        ...state[action.payload.chatId].messages,
+                        action.payload.message
+                    ]
                 }
             }
         }
-        case ADD_DEFAULT_CHAT: {
-            return {
-                ...state,
-                [action.payload]:defaultChats
-            }
-        }
+        case LOAD_MESSAGES:
+            return action.payload;
             
         default: return state;
     }

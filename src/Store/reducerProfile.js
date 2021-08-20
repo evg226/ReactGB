@@ -1,27 +1,20 @@
 import {CHOOSE_USER,ADD_USER} from "./actions";
 
 const initialState = {
-    active: 0,
-    list: [{
-        id: 0,
-        name: "Evgeny",
-        surname: "Ivanov",
-        username: "evg226"
-    
-    }, {
-        id: 1,
-        name: "Evgeny2",
-        surname: "Ivanov2",
-        username: "evg227"
-    
-    }]
+    id: 0,
+    name: "Evgeny",
+    surname: "Ivanov",
 }
 
 
 export const reducerProfile = (state=initialState, action) => {
     switch (action.type) {
-        case CHOOSE_USER: return { ...state, active: action.payload } ;
-        case ADD_USER: return { active:state.active,list:[...state.list,action.payload] };
+        case ADD_USER: return {
+            ...state,
+            id:action.payload.id,
+            name: action.payload.name,
+            surname: action.payload.surname
+        };
 
         default: return state;
     }
