@@ -2,10 +2,10 @@ import "./style.scss";
 import MessageInputForm from "../MessageInputForm";
 import MessageList from "../MessageList";
 import Chat from "./chat";
-import { addChatWithFB,deleteChat, addMessageWithFireBase, initChatsFromFB, removeChatWithFB } from "../../Store/actions";
+import { addChatWithFB, addMessageWithFireBase, initChatsFromFB, removeChatWithFB } from "../../Store/actions";
 import { getChats, getProfiles } from "../../Store/selectors";
 import {Link} from "react-router-dom";
-import  { useCallback, useEffect,  useState } from "react";
+import  { useCallback, useEffect } from "react";
 import { Paper, List, Typography } from '@material-ui/core';
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
 

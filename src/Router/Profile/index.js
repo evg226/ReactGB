@@ -2,8 +2,7 @@ import "./style.scss";
 
 import {getProfiles } from "../../Store/selectors";
 import { Typography, Paper, List, ListItem, Avatar, ListItemAvatar, ListItemText,Button } from '@material-ui/core/';
-import { shallowEqual, useDispatch, useSelector } from 'react-redux';
-import { addDefaultChat } from "../../Store/actions";
+import { shallowEqual,  useSelector } from 'react-redux';
 
 function Profile({logOut}) {
     const profile = useSelector(getProfiles, shallowEqual);

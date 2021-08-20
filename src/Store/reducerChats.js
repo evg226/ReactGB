@@ -1,6 +1,4 @@
 
-import { AccessTimeTwoTone } from "@material-ui/icons";
-import { logDOM } from "@testing-library/react";
 import { ADD_CHAT, REMOVE_CHAT,ADD_MESSAGE, LOAD_MESSAGES } from "./actions";
 
 const initialState = {

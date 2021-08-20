@@ -1,4 +1,4 @@
-import {CHOOSE_USER,ADD_USER} from "./actions";
+import {ADD_USER} from "./actions";
 
 const initialState = {
     id: 0,

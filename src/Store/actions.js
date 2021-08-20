@@ -1,6 +1,5 @@
 import { API_URL_PUBLIC, AUTHORS } from "../constants";
 import firebase from "../Auth/firebase";
-import { ContactSupportOutlined } from "@material-ui/icons";
 
 export const ADD_USER = "PROFILE::ADD_USER";
 
