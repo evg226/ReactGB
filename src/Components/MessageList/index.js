@@ -10,7 +10,7 @@ function MessageList({messageList}) {
     )
 }
 
-function Message(props) {
+export const Message=(props) =>{
     return (
             <ListItem alignItems="flex-start" className={props.mes.author==="Robot"?"message-item message-item_right":"message-item"}>
                 <ListItemAvatar>
