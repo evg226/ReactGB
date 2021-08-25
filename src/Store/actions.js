@@ -78,14 +78,14 @@ export const initChatsFromFB = () => async (dispatch) => {
             snapshot.forEach(snap => {
                 chats = {
                     ...chats,
-                    [snap.key]: { name: snap.val().name, messages:  Object.values(snap.val().messages) }
+                    [snap.key]: { name: snap.val().name, messages: Object.values(snap.val().messages) }
                 };
             });
             dispatch({
                 type: LOAD_MESSAGES,
-                payload: chats||true
+                payload: chats
             });
-        })
+        });
 
 
 }

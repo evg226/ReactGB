@@ -1,0 +1,10 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Тестирование редьюсера. Проверка редьюсера чатов Проверка store после вызова функции загрузки сообщений из FB 1`] = `
+Object {
+  "default": Object {
+    "messages": Array [],
+    "name": "Главный",
+  },
+}
+`;

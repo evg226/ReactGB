@@ -2,12 +2,13 @@ import { applyMiddleware, combineReducers, compose, createStore } from "redux";
 import { reducerProfile } from "./reducerProfile";
 import { reducerChats } from "./reducerChats";
 import { reducerGists } from "./reducerGists";
+import persistReducer from "redux-persist/es/persistReducer";
 // import { middleware } from "./middleware";
 import thunk from "redux-thunk";
 // import createSagaMiddleware from "redux-saga";
 // import {mySaga} from "./sagas"
-import storage from "redux-persist/lib/storage"
-import persistReducer from "redux-persist/es/persistReducer";
+import storage from "redux-persist/lib/storage";
+
 import persistStore from "redux-persist/es/persistStore";
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

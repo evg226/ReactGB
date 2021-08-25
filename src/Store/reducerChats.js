@@ -2,7 +2,7 @@
 import { ADD_CHAT, REMOVE_CHAT,ADD_MESSAGE, LOAD_MESSAGES } from "./actions";
 
 const initialState = {
-    "1": { name: "Главный", messages: [] },
+    "default": { name: "Главный", messages: [] }
 }
 
 export const reducerChats=(state = initialState, action) => {
@@ -33,6 +33,7 @@ export const reducerChats=(state = initialState, action) => {
             }
         }
         case LOAD_MESSAGES:
+            if (!action.payload) return initialState;
             return action.payload;
             
         default: return state;
