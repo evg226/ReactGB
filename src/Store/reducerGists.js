@@ -1,7 +1,9 @@
 import { LOADING_GISTS, SET_ERROR, SET_GISTS } from "./actions"
 
 const initilaState = {
-    gistList: [],
+    gistList: {
+        data: [{ id: "1", url: "",artist_display:"",api_link:"" }]
+    },
     loading: false,
     error:""
 }

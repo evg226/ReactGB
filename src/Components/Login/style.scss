@@ -1,0 +1,12 @@
+.signup {
+    &__box{
+        display: flex;
+        flex-direction: column;
+    }
+    &__input-form{
+        margin: 0.2rem 0.4rem 0.2rem 0 !important; 
+    }
+    &__error{
+        color:#f36f6f;
+    }
+}

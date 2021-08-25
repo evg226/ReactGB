@@ -11,7 +11,7 @@ function Home() {
                     <Card variant="outlined">
                         <CardContent>
                             <Typography  color="textSecondary" gutterBottom>
-                                Войти в систему
+                                Перейти
                             </Typography>
                             <Typography variant="h5" component="h2">Профиль пользователя</Typography>
                             <Typography color="textSecondary">Вход, регистрация</Typography>
@@ -36,6 +36,22 @@ function Home() {
                         </CardContent>
                         <CardActions>
                             <Button size="small">Перейти к чатам</Button>
+                        </CardActions>
+                    </Card>
+                </Link>
+                <Link to="/api" className="main-page__item">
+                    <Card variant="outlined">
+                        <CardContent>
+                            <Typography  color="textSecondary" gutterBottom>
+                                Перейти
+                            </Typography>
+                            <Typography variant="h5" component="h2">Внешний API</Typography>
+                            <Typography color="textSecondary">Переход к внешнему API</Typography>
+                            <Typography variant="body2" component="p"> Посмотрите внешний API<br />Нет учетной записи - зарегистрируйтесь
+                            </Typography>
+                        </CardContent>
+                        <CardActions>
+                            <Button size="small">Войти сейчас</Button>
                         </CardActions>
                     </Card>
                 </Link>

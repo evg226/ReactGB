@@ -4,6 +4,7 @@ import { Provider } from "react-redux";
 import { persistor, store } from "./Store";
 import { PersistGate } from "redux-persist/integration/react";
 import { CircularProgress } from "@material-ui/core";
+import "./Auth/firebase";
 
 function App() {
     return (
